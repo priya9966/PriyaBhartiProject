@@ -1,1 +1,156 @@
 
+ 
+
+
+1.EmployyeDetails:
+
+USE [CapitalDb]
+GO
+
+/****** Object:  Table [dbo].[EmployyeDetails]    Script Date: 5/13/2024 5:35:44 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[EmployyeDetails](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[FirstName] [varchar](50) NOT NULL,
+	[LastName] [varchar](50) NOT NULL,
+	[Email] [varchar](150) NOT NULL,
+	[Phone] [varchar](20) NULL,
+	[Nationality] [varchar](20) NULL,
+	[CurrentResidence] [varchar](250) NULL,
+	[IDNumber] [varchar](20) NULL,
+	[DateOFBirth] [datetime2](7) NULL,
+	[Title] [varchar](100) NULL,
+	[Remark] [text] NULL,
+	[Gender] [varchar](20) NULL,
+	[CreatedDate] [datetime2](7) NULL,
+	[CretaedBy] [varchar](50) NULL,
+ CONSTRAINT [PK_EmployyeDetails] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+2. EmployeeAddition
+
+USE [CapitalDb]
+GO
+
+/****** Object:  Table [dbo].[EmployeeAddition]    Script Date: 5/13/2024 5:34:35 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[EmployeeAddition](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[EmpId] [int] NOT NULL,
+	[TypeId] [int] NOT NULL,
+	[QueId] [int] NOT NULL,
+ CONSTRAINT [PK_EmployeeAddition] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[EmployeeAddition]  WITH CHECK ADD  CONSTRAINT [FK_EmployeeAddition_EmployyeDetails] FOREIGN KEY([EmpId])
+REFERENCES [dbo].[EmployyeDetails] ([Id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[EmployeeAddition] CHECK CONSTRAINT [FK_EmployeeAddition_EmployyeDetails]
+GO
+
+ALTER TABLE [dbo].[EmployeeAddition]  WITH CHECK ADD  CONSTRAINT [FK_EmployeeAddition_Question1] FOREIGN KEY([QueId])
+REFERENCES [dbo].[Question] ([Id])
+GO
+
+ALTER TABLE [dbo].[EmployeeAddition] CHECK CONSTRAINT [FK_EmployeeAddition_Question1]
+GO
+
+ALTER TABLE [dbo].[EmployeeAddition]  WITH CHECK ADD  CONSTRAINT [FK_EmployeeAddition_TypeList] FOREIGN KEY([TypeId])
+REFERENCES [dbo].[TypeList] ([Id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[EmployeeAddition] CHECK CONSTRAINT [FK_EmployeeAddition_TypeList]
+GO
+
+3. Question
+
+USE [CapitalDb]
+GO
+
+/****** Object:  Table [dbo].[Question]    Script Date: 5/13/2024 5:37:32 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Question](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Questions] [text] NOT NULL,
+	[Deleted] [tinyint] NOT NULL,
+	[TypeId] [int] NULL,
+	[CreatedBy] [varchar](50) NULL,
+	[CreatedDate] [datetime2](7) NULL,
+	[UpadtedBy] [varchar](50) NULL,
+	[upadtedDate] [datetime2](7) NULL,
+ CONSTRAINT [PK_Question] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Question]  WITH CHECK ADD  CONSTRAINT [FK_Question_TypeList] FOREIGN KEY([TypeId])
+REFERENCES [dbo].[TypeList] ([Id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[Question] CHECK CONSTRAINT [FK_Question_TypeList]
+GO
+
+
+4. TypeList
+
+USE [CapitalDb]
+GO
+
+/****** Object:  Table [dbo].[TypeList]    Script Date: 5/13/2024 5:38:09 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[TypeList](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Type] [varchar](50) NOT NULL,
+	[Deleted] [tinyint] NOT NULL,
+ CONSTRAINT [PK_Type] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+
+
+
+
+
+
+
